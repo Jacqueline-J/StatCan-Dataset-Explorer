@@ -47,6 +47,9 @@ df = pd.read_csv("your_dataset.csv")
 
 # Print a full summary and get back a suggested DataFrame
 suggested_df = summarize_dataset_scope(df)
+
+# view the suggested dataframe
+suggested_df.head(5)
 ```
 
 The summary will print directly to your console or notebook, showing:
