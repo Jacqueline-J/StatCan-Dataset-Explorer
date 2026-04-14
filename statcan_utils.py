@@ -130,8 +130,9 @@ def build_dataset_constants_summary(df: pd.DataFrame) -> Tuple[str, pd.DataFrame
         output_lines.append("\n".join(variable_lines))
     else:
         output_lines.append("No variable columns found.\n")
-        lines.append(
-            "⚠  Numeric stats may be misleading. These values are computed across all rows \n"
+
+    output_lines.append(
+            "\n\n⚠  Numeric stats may be misleading.⚠ \n\n These values are computed across all rows \n"
             "without grouping. If variable columns above segment the data into distinct series\n "
             "(e.g. different units of measure, adjustment methods, or estimate types), \n"
             "these aggregates mix incompatible values. Filter or group by the categorical\n "
