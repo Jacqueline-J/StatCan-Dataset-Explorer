@@ -145,7 +145,7 @@ def build_dataset_constants_summary(df: pd.DataFrame) -> Tuple[str, pd.DataFrame
         "Suggested DataFrame\n"
         "--------------------------\n"
         "Columns recommended for analysis: those whose values vary across records.\n"
-        "Constant-value and technical metadata columns are excluded.\n\n"
+        " Some metadata columns are included.\n\n"
     )
     output_lines.append(suggested_header)
 
