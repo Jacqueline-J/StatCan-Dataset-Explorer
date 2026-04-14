@@ -130,7 +130,13 @@ def build_dataset_constants_summary(df: pd.DataFrame) -> Tuple[str, pd.DataFrame
         output_lines.append("\n".join(variable_lines))
     else:
         output_lines.append("No variable columns found.\n")
-
+        lines.append(
+            "⚠  Numeric stats may be misleading. These values are computed across all rows \n"
+            "without grouping. If variable columns above segment the data into distinct series\n "
+            "(e.g. different units of measure, adjustment methods, or estimate types), \n"
+            "these aggregates mix incompatible values. Filter or group by the categorical\n "
+            "columns above before drawing conclusions."
+        )
     # ---- Suggested dataframe ----
 
     suggested_header = (
@@ -163,6 +169,18 @@ def print_dataset_constants_summary(df: pd.DataFrame) -> pd.DataFrame:
 # ---------------------------
 
 def summarize_dataset_scope(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Prints both the metadata summary and the dataset constants summary.
+    Returns the suggested DataFrame for further analysis, including UOM
+    and SCALAR_FACTOR if they contain more than one unique value.
+    """
     print_metadata_summary(df)
     suggested_df = print_dataset_constants_summary(df)
+
+    metadata_to_add = [col for col in ['UOM', 'SCALAR_FACTOR']
+                       if col in df.columns and df[col].nunique(dropna=True) > 1]
+
+    if metadata_to_add:
+        suggested_df = pd.concat([suggested_df, df[metadata_to_add]], axis=1)
+
     return suggested_df
